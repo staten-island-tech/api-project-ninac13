@@ -4,43 +4,35 @@ import { DOMSelectors } from "./domselectors";
 
 const URL = "https://hp-api.onrender.com/api/characters"; //insert an api (harry potter students api)
 
+
 async function getData(URL){
     try {
         const response = await fetch(URL);
-        const data = await response.json();
         console.log(data);
+        if (response.status!=200){
+            throw new Error(response);
+        }else{
+            const data = await response.json();
+            console.log(data.data);
+            //this is unique to this harry potter API
+            data.data.forEach((character)=>
+                //add in card attributes
+                )}
     } catch (error) {
-        console.log(error);
-        
+        alert ("There is no agent found");
     }
 }
-
 getData(URL);
 
 //function to first show all cards of characters when website loads
-function allCards(characters){
-    characters.forEach(character => {
-        DOMSelectors.container.insertAdjacentHTML(
-            'beforeend',
-            `<div class = "card">
-                    <h2 class = "card-header">${character.name}</h2>
-                    <img src = "${image.url}" alt = "" class="card-img"></img>
-                    <h3 class = "product-color">${product.color}</h3>
-                    <h3 class = "product-price">$${product.price}</h3>
-                    <h3 class = "product-taste">${product.taste}</h3>
-            </div>`
-        )
-    });
-}
-allCards(data);
 
-//function to show only the student cards when the show student button is clicked
+
+//function to show only the specified cards when the show ___ button is clicked
 function showStudents(response){
     DOMSelectors.studentsButton.addEventListener("click", function(){
 //when it is clicked what should happen
     })
 }
-
 showStudents();
 
 function showTeachers(response){
@@ -48,7 +40,6 @@ function showTeachers(response){
 //when it is clicked what should happen
     })
 }
-
 showTeachers();
 
 function showGryffindors(response){
@@ -56,7 +47,6 @@ function showGryffindors(response){
 //when it is clicked what should happen
     })
 }
-
 showGryffindors();
 
 function showSlytherins(response){
@@ -64,7 +54,6 @@ function showSlytherins(response){
 //when it is clicked what should happen
     })
 }
-
 showSlytherins();
 
 function showHufflepuffs(response){
@@ -72,7 +61,6 @@ function showHufflepuffs(response){
 //when it is clicked what should happen
     })
 }
-
 showHufflepuffs();
 
 function showRavenclaws(response){
@@ -80,7 +68,6 @@ function showRavenclaws(response){
 //when it is clicked what should happen
     })
 }
-
 showRavenclaws();
 
-//MAKE AN ALL CHARACTERS BUTTON
+//MAKE AN ALL CHARACTERS BUTTON TO RESHOW ALL CARDS
