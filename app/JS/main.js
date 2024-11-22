@@ -8,18 +8,29 @@ const URL = "https://hp-api.onrender.com/api/characters"; //insert an api (harry
 async function getData(URL){
     try {
         const response = await fetch(URL);
-        console.log(data);
+        
         if (response.status!=200){
             throw new Error(response);
         }else{
             const data = await response.json();
-            console.log(data.data);
+            console.log(data);
             //this is unique to this harry potter API
-            data.data.forEach((character)=>
+            data.forEach((character)=>
                 //add in card attributes
-                )}
+                DOMSelectors.container.insertAdjacentHTML(
+                    'beforeend',
+                    `<div class = "card">
+                            <h2 class = "character-name">${character.name}</h2>
+                            <img src = "${character.image}" alt = "" class="card-img"></img>
+                            <h3 class = "character-house">${character.house}</h3>
+                            <h3 class = "character-actor">${character.actor}</h3>
+                            <h3 class = "character-patronus">${character.patronus}</h3>
+                    </div>`
+                )
+            )}
     } catch (error) {
         alert ("There is no agent found");
+        console.log(error);
     }
 }
 getData(URL);
