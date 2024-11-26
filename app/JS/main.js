@@ -4,7 +4,7 @@ import { DOMSelectors } from "./domselectors";
 
 const URL = "https://hp-api.onrender.com/api/characters"; //insert an api (harry potter students api)
 
-
+//function to first show all cards of characters when website loads
 async function getData(URL){
     try {
         const response = await fetch(URL);
@@ -22,9 +22,9 @@ async function getData(URL){
                     `<div class = "card">
                             <h2 class = "character-name">${character.name}</h2>
                             <img src = "${character.image}" alt = "" class="card-img"></img>
-                            <h3 class = "character-house">${character.house}</h3>
-                            <h3 class = "character-actor">${character.actor}</h3>
-                            <h3 class = "character-patronus">${character.patronus}</h3>
+                            <h3 class = "character-house">House: ${character.house}</h3>
+                            <h3 class = "character-actor">Actor: ${character.actor}</h3>
+                            <h3 class = "character-patronus">Patronus: ${character.patronus}</h3>
                     </div>`
                 )
             )}
@@ -35,19 +35,17 @@ async function getData(URL){
 }
 getData(URL);
 
-//function to first show all cards of characters when website loads
-
-
 //function to show only the specified cards when the show ___ button is clicked
-function showStudents(response){
+function showAllCharacters(){
     DOMSelectors.studentsButton.addEventListener("click", function(){
 //when it is clicked what should happen
     })
 }
-showStudents();
 
-function showTeachers(response){
+function showTeachers(){
     DOMSelectors.teachersButton.addEventListener("click", function(){
+    DOMSelectors.container.innerHTML = ""; //initially clears out the container
+    data.filter((character)=>character.hogwartsStaff.includes(true));
 //when it is clicked what should happen
     })
 }
