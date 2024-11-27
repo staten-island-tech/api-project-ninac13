@@ -45,8 +45,7 @@ function showAllCharacters(){
 function showTeachers(){
     DOMSelectors.teachersButton.addEventListener("click", function(){
     DOMSelectors.container.innerHTML = ""; //initially clears out the container
-    data.filter((character)=>character.hogwartsStaff.includes(true));
-//when it is clicked what should happen
+    DOMSelectors.container.forEach(card)
     })
 }
 showTeachers();
