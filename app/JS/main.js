@@ -11,22 +11,13 @@ async function getData(URL){
             throw new Error(response);
         }else{
             const data = await response.json();
-            console.log(data);
+            createCards(data); //function where initial cards show up
+            slytherin(data);//function where slytherin cards show up IF clicked on
+            gryffindor(data);//function where gryffindor cards show up IF clicked on
+            hufflepuff(data);//function where hufflepuff cards show up IF clicked on
+            ravenclaw(data); //function where ravenclaw cards show up IF clicked on
             //this is unique to this harry potter API
-            data.forEach((character)=>
-                //add in card attributes
-            //change whats under here later to put in dif functions to call the specific attributes
-                DOMSelectors.container.insertAdjacentHTML(
-                    'beforeend',
-                    `<div class = "card">
-                            <h2 class = "character-name">${character.name}</h2>
-                            <img src = "${character.image}" alt = "" class="card-img"></img>
-                            <h3 class = "character-house">House: ${character.house}</h3>
-                            <h3 class = "character-actor">Actor: ${character.actor}</h3>
-                            <h3 class = "character-patronus">Patronus: ${character.patronus}</h3>
-                    </div>`
-                )
-            )}
+        }
     } catch (error) {
         alert ("There is no agent found");
         console.log(error);
@@ -34,45 +25,57 @@ async function getData(URL){
 }
 getData(URL);
 
-async function showTeachers(){
-
+//function to create cards
+function createCards(data){
+    data.forEach((character)=>
+        //add in card attributes
+        DOMSelectors.container.insertAdjacentHTML(
+            'beforeend',
+            `<div class = "card">
+                    <h2 class = "character-name">${character.name}</h2>
+                    <img src = "${character.image}" alt = "" class="card-img"></img>
+                    <h3 class = "character-house">House: ${character.house}</h3>
+                    <h3 class = "character-actor">Actor: ${character.actor}</h3>
+                    <h3 class = "character-patronus">Patronus: ${character.patronus}</h3>
+            </div>`
+        )
+    )
 }
 
+createCards(data);
 
-//CHANGE WHATS UNDER HERE SO THAT IT CAN CALL A SPECIFIC PART OF THE DATA AND SEE IF THE BUTTON WILL CALL THAT CARD
-//function to show only the specified cards when the show ___ button is clicked
-function showAllCharacters(){
-    DOMSelectors.studentsButton.addEventListener("click", function(){
-//when it is clicked what should happen
+//slytherin characters!!
+function slytherin(data){
+    DOMSelectors.slytherinButton.addEventListener ("click", function(){
+        DOMSelectors.container.innerHTML = ""; // initially clear the html
+        createCards(data.filter((character)=>character.house.includes("Slytherin")));
     })
 }
+slytherin();
 
-function showGryffindors(response){
-    DOMSelectors.gryffindorButton.addEventListener("click", function(){
-//when it is clicked what should happen
+function gryffindor(data){
+    DOMSelectors.gryffindorButton.addEventListener ("click", function(){
+        DOMSelectors.container.innerHTML = ""; // initially clear the html
+        createCards(data.filter((character)=>character.house.includes("Gryffindor")));
     })
 }
-showGryffindors();
+gryffindor(data);
 
-function showSlytherins(response){
-    DOMSelectors.slytherinButton.addEventListener("click", function(){
-//when it is clicked what should happen
+
+function hufflepuff(data){
+    DOMSelectors.hufflepuffButton.addEventListener ("click", function(){
+        DOMSelectors.container.innerHTML = ""; // initially clear the html
+        createCards(data.filter((character)=> character.house.includes("Hufflepuff")));
     })
 }
-showSlytherins();
+hufflepuff(data);
 
-function showHufflepuffs(response){
-    DOMSelectors.hufflepuffButton.addEventListener("click", function(){
-//when it is clicked what should happen
+function ravenclaw(data){
+    DOMSelectors.ravenclawButton.addEventListener ("click", function(){
+        DOMSelectors.container.innerHTML = ""; // initially clear the html
+        createCards(data.filter((character)=>character.house.includes("Ravenclaw")));
     })
 }
-showHufflepuffs();
+ravenclaw(data);
 
-function showRavenclaws(response){
-    DOMSelectors.ravenclawButton.addEventListener("click", function(){
-//when it is clicked what should happen
-    })
-}
-showRavenclaws();
-
-//MAKE AN ALL CHARACTERS BUTTON TO RESHOW ALL CARDS
+//SOME CARDS HAVE BLANK ATTRIBUTES --> fix this!! either add image or disregard the card as a whole 
