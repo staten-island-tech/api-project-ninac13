@@ -16,6 +16,7 @@ async function getData(URL){
             gryffindor(data);//function where gryffindor cards show up IF clicked on
             hufflepuff(data);//function where hufflepuff cards show up IF clicked on
             ravenclaw(data); //function where ravenclaw cards show up IF clicked on
+            allCharacters(data);
             //this is unique to this harry potter API
         }
     } catch (error) {
@@ -43,6 +44,14 @@ function createCards(data){
 }
 
 createCards(data);
+
+function allCharacters(data){
+    DOMSelectors.allCharactersButton.addEventListener("click", function(){
+        DOMSelectors.container.innerHTML = ""; //clear
+        createCards(data);
+    })
+}
+allCharacters(data);
 
 //slytherin characters!!
 function slytherin(data){
