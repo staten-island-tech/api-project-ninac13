@@ -30,7 +30,7 @@ getData(URL);
 function createCards(data){
     data.forEach((character)=>
         //add in card attributes
-        DOMSelectors.container.insertAdjacentHTML(
+        DOMSelectors.cards.insertAdjacentHTML(
             'beforeend',
             `<div class = "card">
                     <h2 class = "character-name">${character.name}</h2>
@@ -47,7 +47,7 @@ createCards(data);
 
 function allCharacters(data){
     DOMSelectors.allCharactersButton.addEventListener("click", function(){
-        DOMSelectors.container.innerHTML = ""; //clear
+        DOMSelectors.cards.innerHTML = ""; //clear
         createCards(data);
     })
 }
@@ -56,7 +56,7 @@ allCharacters(data);
 //slytherin characters!!
 function slytherin(data){
     DOMSelectors.slytherinButton.addEventListener ("click", function(){
-        DOMSelectors.container.innerHTML = ""; // initially clear the html
+        DOMSelectors.cards.innerHTML = ""; // initially clear the html
         createCards(data.filter((character)=>character.house.includes("Slytherin")));
     })
 }
@@ -64,7 +64,7 @@ slytherin();
 
 function gryffindor(data){
     DOMSelectors.gryffindorButton.addEventListener ("click", function(){
-        DOMSelectors.container.innerHTML = ""; // initially clear the html
+        DOMSelectors.cards.innerHTML = ""; // initially clear the html
         createCards(data.filter((character)=>character.house.includes("Gryffindor")));
     })
 }
@@ -73,7 +73,7 @@ gryffindor(data);
 
 function hufflepuff(data){
     DOMSelectors.hufflepuffButton.addEventListener ("click", function(){
-        DOMSelectors.container.innerHTML = ""; // initially clear the html
+        DOMSelectors.cards.innerHTML = ""; // initially clear the html
         createCards(data.filter((character)=> character.house.includes("Hufflepuff")));
     })
 }
@@ -81,7 +81,7 @@ hufflepuff(data);
 
 function ravenclaw(data){
     DOMSelectors.ravenclawButton.addEventListener ("click", function(){
-        DOMSelectors.container.innerHTML = ""; // initially clear the html
+        DOMSelectors.cards.innerHTML = ""; // initially clear the html
         createCards(data.filter((character)=>character.house.includes("Ravenclaw")));
     })
 }
