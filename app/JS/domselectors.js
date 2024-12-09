@@ -1,5 +1,5 @@
 const DOMSelectors = {
-    cards: document.querySelector(".cards"),
+    cards: document.querySelector("#cards"),
     slytherinButton: document.querySelector("#slytherinbtn"),
     gryffindorButton: document.querySelector("#gryffindorbtn"),
     ravenclawButton: document.querySelector("#ravenclawbtn"),

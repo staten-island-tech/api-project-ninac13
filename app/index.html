@@ -7,29 +7,23 @@
     <title>API Project</title>
   </head>
   <body>
-    <div class="container mx-auto px-4" id="title">
-      <!--work on why these diff classes dont all show up--see if you can combine classes-->
-      <p class="text-primary">
-        <p class="text-2xl ...">
-          <p class="font-mono ...">
+    <div class="flex justify-center w-full">
+      <p class= "text-primary text-5xl font-serif text-center mx-auto mt-7 mb-5 animate-pulse underline underline-offset-8">
             Harry Potter Characters
-          </p>
-        </p>
       </p>
     </div>
-    <div class="container mx-auto px-4">
-      <button class="btn btn-primary btn-outline" id="allcharactersbtn">All Characters</button>
-      <button class= "btn btn-primary btn-outline" id="slytherinbtn">Slytherin Characters</button>
-      <button class= "btn btn-primary btn-outline" id="gryffindorbtn">Gryffindor Characters</button>
-      <button class= "btn btn-primary btn-outline" id="hufflepuffbtn">Hufflepuff Characters</button>
-      <button class= "btn btn-primary btn-outline" id="ravenclawbtn">Ravenclaw Characters</button>
+    </label>
+    <div class="flex justify-center flex-wrap px-4">
+      <button class="btn btn-primary hover:w-52 duration-1000 btn-outline mx-5 font-serif" id="allcharactersbtn">All Characters</button>
+      <button class= "btn btn-primary hover:w-52 duration-1000 btn-outline mx-5 font-serif" id="slytherinbtn">Slytherin Characters</button>
+      <button class= "btn btn-primary hover:w-52 duration-1000 btn-outline mx-5 font-serif" id="gryffindorbtn">Gryffindor Characters</button>
+      <button class= "btn btn-primary hover:w-52 duration-1000 btn-outline mx-5 font-serif" id="hufflepuffbtn">Hufflepuff Characters</button>
+      <button class= "btn btn-primary hover:w-52 duration-1000 btn-outline mx-5 font-serif" id="ravenclawbtn">Ravenclaw Characters</button>
     </div>
-    <div class = "body">
-      <div class="flex flex-nowrap">
-        <div class="container mx-auto">
-          <div class = "cards">
-            <!-- where cards will be added -->
-          </div>
+    <div class= "body">
+      <div class="container mx-auto">
+        <div class = "flex justify-center flex-wrap" id="cards">
+          <!-- where cards will be added -->
         </div>
       </div>
     </div>
