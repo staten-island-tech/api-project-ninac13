@@ -1,6 +1,5 @@
 import "../CSS/style.css";
 import { DOMSelectors } from "./domselectors";
-
 const URL = "https://hp-api.onrender.com/api/characters"; //insert an api (harry potter students api)
 
 //function to first show all cards of characters when website loads
@@ -12,11 +11,8 @@ async function getData(URL){
         }else{
             const data = await response.json();
             createCards(data); //function where initial cards show up
-            slytherin(data);//function where slytherin cards show up IF clicked on
-            gryffindor(data);//function where gryffindor cards show up IF clicked on
-            hufflepuff(data);//function where hufflepuff cards show up IF clicked on
-            ravenclaw(data); //function where ravenclaw cards show up IF clicked on
             allCharacters(data);
+            submitButton(data);
             //this is unique to this harry potter API
         }
     } catch (error) {
@@ -26,17 +22,85 @@ async function getData(URL){
 }
 getData(URL);
 
+async function getHouseData(URL){
+    try {
+        const gryffindorHouseResponse = await fetch(`${URL}/house/gryffindor`);
+        const slytherinHouseResponse = await fetch(`${URL}/house/slytherin`);
+        const hufflepuffHouseResponse = await fetch(`${URL}/house/hufflepuff`);
+        const ravenclawHouseResponse = await fetch(`${URL}/house/ravenclaw`);
+
+        if (gryffindorHouseResponse.status!=200 || slytherinHouseResponse.status != 200 || hufflepuffHouseResponse.status!=200 ||ravenclawHouseResponse.status!=200){
+            throw new Error("a response or more than one response couldn't be fetched");
+        }else{
+            const gryffindorData = await gryffindorHouseResponse.json();
+            const ravenclawData = await ravenclawHouseResponse.json();
+            const hufflepuffData = await hufflepuffHouseResponse.json();
+            const slytherinData = await slytherinHouseResponse.json();
+
+            slytherin(slytherinData);//function where slytherin cards show up IF clicked on
+            gryffindor(gryffindorData);//function where gryffindor cards show up IF clicked on
+            hufflepuff(hufflepuffData);//function where hufflepuff cards show up IF clicked on
+            ravenclaw(ravenclawData); //function where ravenclaw cards show up IF clicked on
+            //this is unique to this harry potter API
+        }
+    } catch (error) {
+        alert ("Cannot fetch filtered response");
+        console.log(error);
+    }
+}
+getHouseData(URL);
+
 //function to create cards
 function createCards(data){
     data.forEach((character)=> {
-        let status = character.alive;
-        if (status === "false"){
-            status = "Dead";
+
+        let image = character.image;
+        if (image === ""){
+            image = "img/no_image.jpg";
         }
-        else{
-            status = "Alive";
+        //add in card attributes
+        DOMSelectors.cards.insertAdjacentHTML(
+            'beforeend',
+            `<div class = "w-1/5 border-4 border-base-100 rounded-lg border-double mx-5 my-5 min-w-64 shadow-md bg-base-content hover:bg-primary active:bg-warning focus:outline-none focus:ring focus:ring-base-content">
+                    <p class= "text-xl character-name text-center font-serif text-neutral">${character.name}</p>
+                    <div class="flex justify-center text-neutral">
+                        <img src = "${image}" alt = "" class="w-1/2 h-2/3 rounded-lg hover:w-2/3 hover:l-3/4 duration-500 border-double border-4 border-base-100"></img>
+                    </div>
+            </div>`
+        )
+    })
+}
+
+function cardsAfterSearched(data){
+    data.forEach(character => {
+        let image = character.image;
+        if (image === ""){
+            image = "img/no_image.jpg";
         }
 
+        let status = character.alive;
+        if (character.alive === true){
+            status = "Alive";
+        } 
+        else if (character.alive === false){
+            status = "Deceased";
+        }
+
+        DOMSelectors.cards.insertAdjacentHTML(
+            'beforeend',
+            `<div class = "w-2/6 border-4 h-auto border-base-100 rounded-lg border-double mx-5 my-5 min-w-64 shadow-md bg-base-content hover:bg-primary active:bg-warning focus:outline-none focus:ring focus:ring-base-content">
+                    <p class= "text-3xl character-name text-center font-serif text-neutral my-5">${character.name}</p>
+                    <div class="flex justify-center text-neutral">
+                        <img src = "${image}" alt = "" class="w-1/2 h-2/3 rounded-lg hover:w-2/3 hover:l-3/4 duration-500 border-double border-4 border-base-100"></img>
+                    </div>
+                    <p class= "text-2xl font-bold text-center font-serif text-neutral my-8">Status: ${status}</p>
+            </div>`
+        )
+    });
+}
+
+function moreDetailsCards(data){
+    data.forEach(character => {
         let image = character.image;
         if (image === ""){
             image = "img/no_image.jpg";
@@ -61,11 +125,10 @@ function createCards(data){
         if (patronus === ""){
             patronus = "N/A";
         }
-        //add in card attributes
         DOMSelectors.cards.insertAdjacentHTML(
             'beforeend',
-            `<div class = "w-1/5 border-4 border-base-100 rounded-lg border-double mx-5 my-5 min-w-64 shadow-md bg-base-content hover:bg-primary active:bg-warning focus:outline-none focus:ring focus:ring-base-content">
-                    <p class= "text-xl character-name text-center font-serif text-neutral">${character.name}</p>
+            `<div class = "w-1/5 border-4 h-auto border-base-100 rounded-lg border-double mx-5 my-5 min-w-64 shadow-md bg-base-content hover:bg-primary active:bg-warning focus:outline-none focus:ring focus:ring-base-content">
+                    <p class= "text-3xl character-name text-center font-serif text-neutral my-5">${character.name}</p>
                     <div class="flex justify-center text-neutral">
                         <img src = "${image}" alt = "" class="w-1/2 h-2/3 rounded-lg hover:w-2/3 hover:l-3/4 duration-500 border-double border-4 border-base-100"></img>
                     </div>
@@ -73,14 +136,11 @@ function createCards(data){
                     <p class= "text-center font-serif text-neutral">Actor: ${actor}</p>
                     <p class= "text-center font-serif text-neutral">Ancestry: ${ancestry}</p>
                     <p class= "text-center font-serif text-neutral">Patronus: ${patronus}</p>
-                    <p class= "text-center font-serif text-neutral">Status: ${status}</p>
-
             </div>`
         )
-    })
+    });
 }
 
-createCards(data);
 
 function allCharacters(data){
     DOMSelectors.allCharactersButton.addEventListener("click", function(){
@@ -88,39 +148,51 @@ function allCharacters(data){
         createCards(data);
     })
 }
-allCharacters(data);
 
 //slytherin characters!!
 function slytherin(data){
     DOMSelectors.slytherinButton.addEventListener ("click", function(){
         DOMSelectors.cards.innerHTML = ""; // initially clear the html
-        createCards(data.filter((character)=>character.house.includes("Slytherin")));
+        moreDetailsCards(data.filter((character)=>character.house.includes("Slytherin")));
     })
 }
-slytherin();
 
 //gryffindor characters!!
 function gryffindor(data){
     DOMSelectors.gryffindorButton.addEventListener ("click", function(){
         DOMSelectors.cards.innerHTML = ""; // initially clear the html
-        createCards(data.filter((character)=>character.house.includes("Gryffindor")));
+        moreDetailsCards(data.filter((character)=>character.house.includes("Gryffindor")));
     })
 }
-gryffindor(data);
 
 
 function hufflepuff(data){
     DOMSelectors.hufflepuffButton.addEventListener ("click", function(){
         DOMSelectors.cards.innerHTML = ""; // initially clear the html
-        createCards(data.filter((character)=> character.house.includes("Hufflepuff")));
+        moreDetailsCards(data.filter((character)=> character.house.includes("Hufflepuff")));
     })
 }
-hufflepuff(data);
 
 function ravenclaw(data){
     DOMSelectors.ravenclawButton.addEventListener ("click", function(){
         DOMSelectors.cards.innerHTML = ""; // initially clear the html
-        createCards(data.filter((character)=>character.house.includes("Ravenclaw")));
+        moreDetailsCards(data.filter((character)=>character.house.includes("Ravenclaw")));
     })
 }
-ravenclaw(data);
+
+function submitButton(data){
+    DOMSelectors.submit.addEventListener("click", function () {
+        DOMSelectors.cards.innerHTML = ""; // initially clear the html
+        let namesArray = [];
+        data.forEach((character) => {
+            namesArray.push(character.name);
+        });
+        if(!namesArray.includes(DOMSelectors.input.value)){
+            createCards(data);
+        }
+        else{
+            cardsAfterSearched(data.filter((character)=>character.name===(DOMSelectors.input.value)));
+        }
+        DOMSelectors.input.value = "";
+    });
+}

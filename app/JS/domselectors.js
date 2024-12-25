@@ -4,7 +4,9 @@ const DOMSelectors = {
     gryffindorButton: document.querySelector("#gryffindorbtn"),
     ravenclawButton: document.querySelector("#ravenclawbtn"),
     hufflepuffButton: document.querySelector("#hufflepuffbtn"),
-    allCharactersButton: document.querySelector("#allcharactersbtn")
+    allCharactersButton: document.querySelector("#allcharactersbtn"),
+    submit: document.querySelector("#submit-button"),
+    input: document.querySelector("#character-search")
 };
 
 export{DOMSelectors};
